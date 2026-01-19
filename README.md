@@ -1,6 +1,8 @@
 # Calibration_testing
 scripts used to produce the energy spectra, vertex distributions e.g.
 
+applied after https://github.com/YaKozina/Energy_Calibration
+
 **OM_SPECTRA** folder contains :
 
 **reading_root_OM_SPECTRA.cpp** - reads root file obtained after MiModule and saves txt files with data for each OM

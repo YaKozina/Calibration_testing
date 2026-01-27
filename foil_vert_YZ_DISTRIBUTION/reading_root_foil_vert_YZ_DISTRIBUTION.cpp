@@ -9,12 +9,28 @@
 #include "TH2D.h"
 #include "TH1D.h"
 #include "TCanvas.h"
+#include "TStyle.h"
+#include "TPaletteAxis.h"
 
 R__LOAD_LIBRARY(./libMiModule.so);
 
 void reading_root_foil_vert_YZ_DISTRIBUTION()
 {
+  // -------- Style (presentation-ready) --------
+  gStyle->SetOptStat(0);              
+  gStyle->SetNumberContours(255);     
+  gStyle->SetImageScaling(3.0);       
+  gStyle->SetTitleFont(42, "XYZ");
+  gStyle->SetLabelFont(42, "XYZ");
+  gStyle->SetTitleSize(0.045, "XYZ");
+  gStyle->SetLabelSize(0.038, "XYZ");
+  gStyle->SetTitleOffset(1.15, "X");
+  gStyle->SetTitleOffset(1.20, "Y");
+  gStyle->SetTitleOffset(1.10, "Z");
+
   TFile* f = new TFile("Default.root","READ");
+  if (!f || f->IsZombie()) { std::cerr << "Cannot open Default.root\n"; return; }
+
   TTree* s = (TTree*) f->Get("Event");
   if (!s) { std::cerr << "Tree 'Event' not found\n"; return; }
 
@@ -23,17 +39,17 @@ void reading_root_foil_vert_YZ_DISTRIBUTION()
 
   // 2D
   TH2D* hYZ = new TH2D("hFoilYZ",
-                       "Foil vertices;Y;Z",
-                       400, -3000, 3000,
+                       "Foil vertices;Y [mm];Z [mm]",
+                       400, -2500, 2500,
                        400, -2000, 2000);
 
   TH1D* hY  = new TH1D("hFoilY",
-                       "Foil vertex Y;Y;Entries",
-                       400, -3000, 3000);
+                       "Foil vertex Y;Y [mm];Entries",
+                       400, -2500, 2500);
 
   TH1D* hZ  = new TH1D("hFoilZ",
-                       "Foil vertex Z;Z;Entries",
-                       400, -3000, 3000);
+                       "Foil vertex Z;Z [mm];Entries",
+                       400, -2500, 2500);
 
   long long totVert = 0, totFoil = 0;
 
@@ -50,6 +66,7 @@ void reading_root_foil_vert_YZ_DISTRIBUTION()
 
         std::string where = Eve->getPTDVertpos(ip, iv);
 
+        // debug
         if (totVert < 20) {
           std::cout << "Example vertex label: '" << where << "'\n";
         }
@@ -69,21 +86,50 @@ void reading_root_foil_vert_YZ_DISTRIBUTION()
     }
   }
 
-
   TFile* out = new TFile("FoilYZ-1556_calib_to_1556-75-200-mm_run.root", "RECREATE");
   hYZ->Write();
   hY->Write();
   hZ->Write();
   out->Close();
 
-  TCanvas* c2 = new TCanvas("cFoilYZ","Foil YZ",900,700);
+  // -------- Canvas + pretty colorbar + HiRes PNG --------
+  TCanvas* c2 = new TCanvas("cFoilYZ","Foil YZ",1800,1400);
+  c2->SetLeftMargin(0.12);
+  c2->SetBottomMargin(0.12);
+  c2->SetTopMargin(0.08);
+  c2->SetRightMargin(0.10); 
+
   hYZ->SetMinimum(1);
+  hYZ->GetXaxis()->CenterTitle(true);
+  hYZ->GetYaxis()->CenterTitle(true);
   hYZ->Draw("COLZ");
 
-  TCanvas* cY = new TCanvas("cFoilY","Foil Y",900,600);
+
+
+  c2->Update();
+
+
+  if (auto pal = (TPaletteAxis*)hYZ->GetListOfFunctions()->FindObject("palette")) {
+    pal->SetX1NDC(0.915);  
+    pal->SetX2NDC(0.945);  
+    pal->SetY1NDC(0.15);
+    pal->SetY2NDC(0.90);
+    pal->SetLabelSize(0.032);
+  }
+
+  c2->Modified();
+  c2->Update();
+
+
+  c2->SaveAs("FoilYZ_reference_source_plane_HQ.png");  
+
+
+  TCanvas* cY = new TCanvas("cFoilY","Foil Y",1400,900);
+  cY->SetLeftMargin(0.12); cY->SetBottomMargin(0.12);
   hY->Draw("HIST");
 
-  TCanvas* cZ = new TCanvas("cFoilZ","Foil Z",900,600);
+  TCanvas* cZ = new TCanvas("cFoilZ","Foil Z",1400,900);
+  cZ->SetLeftMargin(0.12); cZ->SetBottomMargin(0.12);
   hZ->Draw("HIST");
 
   std::cout << "Filled foil vertices: " << totFoil

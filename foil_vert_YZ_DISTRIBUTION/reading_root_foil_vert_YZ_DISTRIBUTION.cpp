@@ -24,16 +24,16 @@ void reading_root_foil_vert_YZ_DISTRIBUTION()
   // 2D
   TH2D* hYZ = new TH2D("hFoilYZ",
                        "Foil vertices;Y;Z",
-                       400, -2000, 2000,
+                       400, -3000, 3000,
                        400, -2000, 2000);
 
   TH1D* hY  = new TH1D("hFoilY",
                        "Foil vertex Y;Y;Entries",
-                       400, -2000, 2000);
+                       400, -3000, 3000);
 
   TH1D* hZ  = new TH1D("hFoilZ",
                        "Foil vertex Z;Z;Entries",
-                       400, -2000, 2000);
+                       400, -3000, 3000);
 
   long long totVert = 0, totFoil = 0;
 
@@ -54,7 +54,7 @@ void reading_root_foil_vert_YZ_DISTRIBUTION()
           std::cout << "Example vertex label: '" << where << "'\n";
         }
 
-        if (where == "source foil") {
+        if (where == "reference source plane") {
           double y = Eve->getPTDverY(ip, iv);
           double z = Eve->getPTDverZ(ip, iv);
           if (!std::isfinite(y) || !std::isfinite(z)) continue;
@@ -70,7 +70,7 @@ void reading_root_foil_vert_YZ_DISTRIBUTION()
   }
 
 
-  TFile* out = new TFile("FoilYZ-1556_calib_to_2700_run.root", "RECREATE");
+  TFile* out = new TFile("FoilYZ-1556_calib_to_1556-75-200-mm_run.root", "RECREATE");
   hYZ->Write();
   hY->Write();
   hZ->Write();

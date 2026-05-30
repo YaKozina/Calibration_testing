@@ -19,6 +19,9 @@ The repository contains two independent parts:
 
   and the **UNIFIED PIPELINE**
 
+<img width="705" height="1388" alt="pipelines drawio" src="https://github.com/user-attachments/assets/b32e8201-22fa-49f5-9780-7cdf68dc66c5" />
+
+
 Applied after:
 
 - <https://github.com/YaKozina/Calibration_Constants_Extraction>

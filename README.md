@@ -8,14 +8,16 @@ The repository contains two independent parts:
 
 - **REAL** - full pipeline for real experimental data: calibration-constant
   extraction and application of the constants to the same dataset for all four
-  energy-correction modes. Uses Falaise 5.1.10.
+  energy-correction modes. Uses Falaise 5.1.10 at least.
 
 - **SIMU** - simulation pipeline for Bi-207 calibration events, used to study
   the physical origin of the angular energy-loss effect observed in real data.
   Simulated events are not calibrated; the simulation is used to identify which
   electrons lose energy in the copper calibration-source frame (GID 1066) and
   to confirm that these electrons populate the inter-peak 600-800 keV plateau.
-  Uses Falaise 5.1.13.
+  Uses Falaise 5.1.13 and further versions only.
+
+  and the **UNIFIED PIPELINE**
 
 Applied after:
 

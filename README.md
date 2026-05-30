@@ -348,3 +348,13 @@ mode folder.
 | `submit_MiModule.sh` / `run_MiModule.sh` | MiModule SLURM array |
 | `send.sh` | Single-event pipeline test, SNCuts + MiModule sequentially |
 | `send_600-800_one_ev.sh` | Single event in the 600-800 keV window for `flvisualize` |
+
+## Related repositories
+
+| Repository | Role |
+|------------|------|
+| https://github.com/konarfil/CalibrationTools | original calibration software by F. Koňařík |
+| https://github.com/YaKozina/Calibration_Constants_Extraction | first stage: extraction of calibration constants |
+| https://github.com/YaKozina/Energy_Calibration | second stage: application of calibration constants |
+| https://github.com/YaKozina/Calibration_testing | full real/simulation pipeline and spectrum-level analysis |
+

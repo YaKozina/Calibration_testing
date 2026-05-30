@@ -4,6 +4,11 @@ Scripts, configuration files, and ROOT macros for the full calibration and
 analysis chain of the SuperNEMO calorimeter using Bi-207 calibration sources,
 developed and tested on CC-IN2P3.
 
+Applied after:
+
+- <https://github.com/YaKozina/Calibration_Constants_Extraction>
+- <https://github.com/YaKozina/Energy_Calibration>
+
 The repository contains two independent parts:
 
 - **REAL** - full pipeline for real experimental data: calibration-constant
@@ -21,11 +26,6 @@ The repository contains two independent parts:
 
 <img width="705" height="1388" alt="pipelines drawio" src="https://github.com/user-attachments/assets/b32e8201-22fa-49f5-9780-7cdf68dc66c5" />
 
-
-Applied after:
-
-- <https://github.com/YaKozina/Calibration_Constants_Extraction>
-- <https://github.com/YaKozina/Energy_Calibration>
 
 ---
 
